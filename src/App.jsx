@@ -95,7 +95,6 @@ const styles = {
     backgroundSize: "cover",
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
-    backgroundAttachment: "fixed",
     color: "#f8fafc",
     fontFamily: "Inter, system-ui, Arial, sans-serif",
     padding: "clamp(14px, 4vw, 30px)",
@@ -168,7 +167,7 @@ function calculateRecipe(recipe) {
 function calculateTargets(profile, workDay, medication, healthProfile) {
   if (!profile) return null;
 
-  const weight = Number(profile.starting_weight_kg);
+  const weight = Number(profile.current_weight_kg);
   const height = Number(profile.height_cm);
   const age = Number(profile.age || 30);
 
@@ -464,17 +463,16 @@ async function saveUserSettings() {
     const calc = calculateRecipe(recipe);
 
     const { error } = await supabase.from("meal_logs").insert([
-      {
-        user_id: session.user.id,
-        food_name: recipe.name,
-        meal_name: recipe.name,
-        meal_type: recipe.mealType,
-        calories: calc.calories,
-        protein_g: calc.protein,
-        carbs_g: calc.carbs,
-        fats_g: calc.fats,
-      },
-    ]);
+  {
+    user_id: session.user.id,
+    food_name: recipe.name,
+    meal_type: recipe.mealType,
+    calories: calc.calories,
+    protein_g: calc.protein,
+    carbs_g: calc.carbs,
+    fats_g: calc.fats,
+  },
+]);
 
     if (error) alert(error.message);
     else fetchMealLogs(session.user.id);
