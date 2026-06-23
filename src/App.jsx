@@ -217,7 +217,7 @@ function calculateTargets(profile, workDay, medication, healthProfile) {
     bmr,
     tdee,
     calorieTarget,
-    proteinG: Math.round((calorieTarget * proteinPercent) / 4),
+    proteinG: Math.round(Math.min(weight * 1.2, 170)),
     carbsG: Math.round((calorieTarget * carbPercent) / 4),
     fatsG: Math.round((calorieTarget * fatPercent) / 9),
   };
@@ -1110,21 +1110,25 @@ const activeMealTimes = getAdaptiveMealTimes();
     </>
   )}
 
- <p
-  style={{
-    color: "#94a3b8",
-    fontSize: "0.9rem",
-    marginTop: "12px",
-  }}
->
-  Adjusted for:
-  {healthProfile.fatty_liver && " Fatty Liver,"}
-  {healthProfile.insulin_resistance && " Insulin Resistance,"}
-  {medication === "mounjaro" && " Mounjaro,"}
-  {medication === "semaglutide" && " Semaglutide,"}
-  {workDay?.jobActivity === "sitting" && " Mainly Sitting,"}
-  {workDay?.jobActivity === "standing" && " Mainly Standing,"}
-  {workDay?.jobActivity === "physical" && " Physical Work"}
+ <p style={{ color: "#cbd5e1", fontSize: "0.9rem", marginTop: "12px" }}>
+  Adjusted for:{" "}
+  {[
+    healthProfile.fatty_liver && "Fatty Liver",
+    healthProfile.insulin_resistance && "Insulin Resistance",
+    healthProfile.slow_metabolism && "Slow Metabolism",
+    healthProfile.high_blood_pressure && "High Blood Pressure",
+    healthProfile.high_cholesterol && "High Cholesterol",
+    healthProfile.type_2_diabetes && "Type 2 Diabetes",
+    healthProfile.acid_reflux && "Acid Reflux",
+    healthProfile.kidney_problems && "Kidney Problems",
+    medication === "mounjaro" && "Mounjaro",
+    medication === "semaglutide" && "Semaglutide",
+    workDay?.jobActivity === "sitting" && "Mainly Sitting",
+    workDay?.jobActivity === "standing" && "Mainly Standing",
+    workDay?.jobActivity === "physical" && "Physical Work",
+  ]
+    .filter(Boolean)
+    .join(", ") || "General weight loss"}
 </p>
 
 </div>
