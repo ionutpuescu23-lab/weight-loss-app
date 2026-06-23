@@ -242,7 +242,14 @@ export default function App() {
   const [weightLogs, setWeightLogs] = useState([]);
   const [mealLogs, setMealLogs] = useState([]);
   const [newWeight, setNewWeight] = useState("");
-
+const [customMeal, setCustomMeal] = useState({
+  food_name: "",
+  meal_type: "Homemade",
+  calories: "",
+  protein_g: "",
+  carbs_g: "",
+  fats_g: "",
+});
   const [formData, setFormData] = useState({
     full_name: "",
     age: "",
@@ -477,7 +484,45 @@ async function saveUserSettings() {
     if (error) alert(error.message);
     else fetchMealLogs(session.user.id);
   }
+async function addCustomMeal(e) {
+  e.preventDefault();
 
+  const { error } = await supabase.from("meal_logs").insert([
+    {
+      user_id: session.user.id,
+      food_name: customMeal.food_name,
+      meal_type: customMeal.meal_type,
+      calories: Number(customMeal.calories),
+      protein_g: Number(customMeal.protein_g || 0),
+      carbs_g: Number(customMeal.carbs_g || 0),
+      fats_g: Number(customMeal.fats_g || 0),
+    },
+  ]);
+
+  if (error) alert(error.message);
+  else {
+    setCustomMeal({
+      food_name: "",
+      meal_type: "Homemade",
+      calories: "",
+      protein_g: "",
+      carbs_g: "",
+      fats_g: "",
+    });
+    fetchMealLogs(session.user.id);
+  }
+}
+
+async function deleteMeal(mealId) {
+  const { error } = await supabase
+    .from("meal_logs")
+    .delete()
+    .eq("id", mealId)
+    .eq("user_id", session.user.id);
+
+  if (error) alert(error.message);
+  else fetchMealLogs(session.user.id);
+}
   async function handleLogWeightSubmit(e) {
     e.preventDefault();
 
@@ -1071,29 +1116,153 @@ const activeMealTimes = getAdaptiveMealTimes();
           <main style={{ display: "grid", gap: 18 }}>
             <div style={styles.card}>
               <h2 style={styles.heading}>Suggested meals</h2>
+
               {suggestedRecipes.map((recipe) => {
                 const calc = calculateRecipe(recipe);
+
                 return (
-                  <div key={recipe.name} style={{ borderBottom: "1px solid rgba(148,163,184,0.18)", padding: "16px 0" }}>
-                    <img src={recipe.image} alt={recipe.name} onError={(e) => { e.currentTarget.style.display = "none"; }} style={{ width: "100%", height: 180, objectFit: "cover", borderRadius: 16, marginBottom: 12 }} />
-                    <h3 style={styles.heading}>{recipe.name}</h3>
-                    <p>{recipe.mealType} · Portion {recipe.portionG}g</p>
-                    <p><strong>{calc.calories} kcal</strong> · Protein {calc.protein}g · Carbs {calc.carbs}g · Fats {calc.fats}g</p>
-                    <p style={{ color: "#94a3b8" }}>Allergens: {recipe.allergens.length ? recipe.allergens.join(", ") : "None listed"}</p>
-                    <button style={styles.button} onClick={() => logRecipe(recipe)}>Add this meal</button>
+                  <div
+                    key={recipe.name}
+                    style={{
+                      borderBottom: "1px solid rgba(148,163,184,0.18)",
+                      padding: "12px 0",
+                    }}
+                  >
+                    <h3>{recipe.name}</h3>
+
+                    <p>
+                      {recipe.mealType} • Portion {recipe.portionG}g
+                    </p>
+
+                    <p>
+                      {calc.calories} kcal • Protein {calc.protein}g •
+                      Carbs {calc.carbs}g • Fats {calc.fats}g
+                    </p>
+
+                    <button
+                      style={styles.button}
+                      onClick={() => logRecipe(recipe)}
+                    >
+                      Add this meal
+                    </button>
                   </div>
                 );
               })}
             </div>
 
             <div style={styles.card}>
-              <h2 style={styles.heading}>Today's meals</h2>
-              {todaysMeals.length === 0 ? <p>No meals logged yet.</p> : todaysMeals.map((meal) => (
-                <div key={meal.id} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid rgba(148,163,184,0.15)", padding: "12px 0" }}>
-                  <span>{meal.meal_name || meal.food_name || "Meal"}</span>
-                  <strong>{meal.calories} kcal</strong>
-                </div>
-              ))}
+              <h2 style={styles.heading}>Add Homemade Meal</h2>
+
+              <form onSubmit={addCustomMeal}>
+                <input
+                  style={styles.input}
+                  placeholder="Meal name"
+                  value={customMeal.food_name}
+                  onChange={(e) =>
+                    setCustomMeal({
+                      ...customMeal,
+                      food_name: e.target.value,
+                    })
+                  }
+                />
+
+                <input
+                  style={styles.input}
+                  placeholder="Calories"
+                  type="number"
+                  value={customMeal.calories}
+                  onChange={(e) =>
+                    setCustomMeal({
+                      ...customMeal,
+                      calories: e.target.value,
+                    })
+                  }
+                />
+
+                <input
+                  style={styles.input}
+                  placeholder="Protein g"
+                  type="number"
+                  value={customMeal.protein_g}
+                  onChange={(e) =>
+                    setCustomMeal({
+                      ...customMeal,
+                      protein_g: e.target.value,
+                    })
+                  }
+                />
+
+                <input
+                  style={styles.input}
+                  placeholder="Carbs g"
+                  type="number"
+                  value={customMeal.carbs_g}
+                  onChange={(e) =>
+                    setCustomMeal({
+                      ...customMeal,
+                      carbs_g: e.target.value,
+                    })
+                  }
+                />
+
+                <input
+                  style={styles.input}
+                  placeholder="Fats g"
+                  type="number"
+                  value={customMeal.fats_g}
+                  onChange={(e) =>
+                    setCustomMeal({
+                      ...customMeal,
+                      fats_g: e.target.value,
+                    })
+                  }
+                />
+
+                <button style={styles.button}>
+                  Add Homemade Meal
+                </button>
+              </form>
+            </div>
+
+            <div style={styles.card}>
+              <h2 style={styles.heading}>Today's Meals</h2>
+
+              {todaysMeals.length === 0 ? (
+                <p>No meals logged yet.</p>
+              ) : (
+                todaysMeals.map((meal) => (
+                  <div
+                    key={meal.id}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      borderBottom: "1px solid rgba(148,163,184,0.15)",
+                      padding: "12px 0",
+                    }}
+                  >
+                    <div>
+                      <strong>{meal.food_name}</strong>
+                      <br />
+                      <small>{meal.calories} kcal</small>
+                    </div>
+
+                    <button
+                      onClick={() => deleteMeal(meal.id)}
+                      style={{
+                        background: "#ef4444",
+                        color: "white",
+                        border: "none",
+                        padding: "8px 12px",
+                        borderRadius: "8px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))
+              )}
             </div>
           </main>
 
