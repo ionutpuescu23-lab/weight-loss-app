@@ -860,7 +860,16 @@ const activeMealTimes = getAdaptiveMealTimes();
               textAlign: "center",
             }}
           >
-            <h1 style={{ fontSize: "3.5rem", color: "white", margin: "0 0 18px 0", lineHeight: 1.1 }}>
+            <h1
+  style={{
+    fontSize: "clamp(2rem, 8vw, 3.5rem)",
+    color: "#ffffff",
+    margin: "0 0 18px 0",
+    lineHeight: 1.15,
+    textAlign: "center",
+    wordBreak: "normal",
+  }}
+>
               🌅 Future Me Journey
             </h1>
 
