@@ -167,7 +167,7 @@ function calculateRecipe(recipe) {
 function calculateTargets(profile, workDay, medication, healthProfile) {
   if (!profile) return null;
 
-  const weight = Number(profile.current_weight_kg);
+  const weight = Number(profile.starting_weight_kg);
   const height = Number(profile.height_cm);
   const age = Number(profile.age || 30);
 
@@ -1103,10 +1103,10 @@ const activeMealTimes = getAdaptiveMealTimes();
 
   {targets && (
     <>
-      <p>Calories: {Math.round(consumedToday.calories)} / {targets.calorieTarget}</p>
-      <p>Protein: {Math.round(consumedToday.protein)}g / {targets.proteinG}g</p>
-      <p>Carbs: {Math.round(consumedToday.carbs)}g / {targets.carbsG}g</p>
-      <p>Fats: {Math.round(consumedToday.fats)}g / {targets.fatsG}g</p>
+      <p>Calories: {Math.round(consumedToday.calories)} / {targets.calorieTarget || 0}</p>
+<p>Protein: {Math.round(consumedToday.protein)}g / {targets.proteinG || 0}g</p>
+<p>Carbs: {Math.round(consumedToday.carbs)}g / {targets.carbsG || 0}g</p>
+<p>Fats: {Math.round(consumedToday.fats)}g / {targets.fatsG || 0}g</p>
     </>
   )}
 
