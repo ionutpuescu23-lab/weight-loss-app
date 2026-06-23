@@ -98,17 +98,18 @@ const styles = {
     backgroundAttachment: "fixed",
     color: "#f8fafc",
     fontFamily: "Inter, system-ui, Arial, sans-serif",
-    padding: "30px",
+    padding: "clamp(14px, 4vw, 30px)",
   },
   shell: { maxWidth: 1400, margin: "0 auto" },
-  card: {
-    background: "rgba(15,23,42,0.78)",
-    border: "1px solid rgba(148,163,184,0.22)",
-    borderRadius: 28,
-    padding: "30px",
-    boxShadow: "0 25px 60px rgba(0,0,0,0.35)",
-    backdropFilter: "blur(12px)",
-  },
+ card: {
+  background: "rgba(15,23,42,0.94)",
+  border: "1px solid rgba(56,189,248,0.28)",
+  borderRadius: 28,
+  padding: "24px",
+  boxShadow: "0 25px 60px rgba(0,0,0,0.45)",
+  backdropFilter: "blur(12px)",
+  color: "#ffffff",
+},
   input: {
     width: "100%",
     padding: "13px 14px",
@@ -120,19 +121,27 @@ const styles = {
     marginBottom: 12,
     fontSize: 15,
   },
-  button: {
-    width: "100%",
-    padding: "13px 16px",
-    borderRadius: 12,
-    border: "none",
-    background: "linear-gradient(135deg,#3b82f6,#2563eb)",
-    color: "#fff",
-    fontWeight: 800,
-    cursor: "pointer",
-    fontSize: 15,
-  }
-}
+ button: {
+  width: "100%",
+  padding: "13px 16px",
+  borderRadius: 12,
+  border: "none",
+  background: "linear-gradient(135deg,#3b82f6,#2563eb)",
+  color: "#fff",
+  fontWeight: 800,
+  cursor: "pointer",
+  fontSize: 15,
+},
 
+heading: {
+  color: "#ffffff",
+  fontWeight: 800,
+},
+
+muted: {
+  color: "#cbd5e1",
+},
+};
 
 function calculateRecipe(recipe) {
   const total = recipe.ingredients.reduce(
@@ -788,7 +797,20 @@ const activeMealTimes = getAdaptiveMealTimes();
       <div style={styles.page}>
         <div style={{ maxWidth: 430, margin: "80px auto" }}>
           <div style={styles.card}>
-            <h1>🌅 Future Me Journey</h1>
+            <div style={{ textAlign: "center", marginBottom: "18px" }}>
+              <div style={{ fontSize: "2.8rem", marginBottom: "10px" }}>🌅</div>
+              <h1
+                style={{
+                  fontSize: "clamp(2rem, 8vw, 3.2rem)",
+                  color: "#ffffff",
+                  margin: 0,
+                  lineHeight: 1.1,
+                  textAlign: "center",
+                }}
+              >
+                Future Me Journey
+              </h1>
+            </div>
             <p style={{ color: "#cbd5e1", lineHeight: 1.7 }}>
               You have already completed the hardest step — making the decision to change.
             </p>
@@ -797,6 +819,7 @@ const activeMealTimes = getAdaptiveMealTimes();
               <input style={styles.input} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
               <input style={styles.input} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
               <button style={styles.button}>{loading ? "Please wait..." : isSignUp ? "Create account" : "Sign in"}</button>
+              
             </form>
 
             <button onClick={() => setIsSignUp(!isSignUp)} style={{ marginTop: 16, background: "none", border: "none", color: "#93c5fd", cursor: "pointer" }}>
@@ -813,7 +836,7 @@ const activeMealTimes = getAdaptiveMealTimes();
       <div style={styles.page}>
         <div style={{ maxWidth: 520, margin: "60px auto" }}>
           <div style={styles.card}>
-            <h1>Create your profile</h1>
+            <h1 style={styles.heading}>Create your profile</h1>
 
             <form onSubmit={handleOnboardingSubmit}>
               <input style={styles.input} placeholder="Full name" value={formData.full_name} onChange={(e) => setFormData({ ...formData, full_name: e.target.value })} required />
@@ -836,7 +859,7 @@ const activeMealTimes = getAdaptiveMealTimes();
           style={{
             minHeight: "650px",
             borderRadius: "24px",
-            padding: "70px",
+            padding: "clamp(22px, 6vw, 70px)",
             marginBottom: "30px",
             display: "flex",
             justifyContent: "center",
@@ -845,13 +868,14 @@ const activeMealTimes = getAdaptiveMealTimes();
               "linear-gradient(90deg, rgba(0,0,0,0.72), rgba(0,0,0,0.35), rgba(0,0,0,0.15)), url('/images/healthy-background.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            height: "650px",
+            minHeight: "650px",
             boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
           }}
         >
           <div
             style={{
-              maxWidth: "750px",
+              maxWidth: "720px",
+              width: "100%",
               background: "rgba(2,6,23,0.55)",
               padding: "28px",
               borderRadius: "22px",
@@ -860,18 +884,20 @@ const activeMealTimes = getAdaptiveMealTimes();
               textAlign: "center",
             }}
           >
-            <h1
-  style={{
-    fontSize: "clamp(2rem, 8vw, 3.5rem)",
-    color: "#ffffff",
-    margin: "0 0 18px 0",
-    lineHeight: 1.15,
-    textAlign: "center",
-    wordBreak: "normal",
-  }}
->
-              🌅 Future Me Journey
-            </h1>
+            <div style={{ textAlign: "center", marginBottom: "18px" }}>
+              <div style={{ fontSize: "3rem", marginBottom: "10px" }}>🌅</div>
+              <h1
+                style={{
+                  fontSize: "clamp(2.2rem, 7vw, 3.6rem)",
+                  color: "#ffffff",
+                  margin: 0,
+                  lineHeight: 1.1,
+                  textAlign: "center",
+                }}
+              >
+                Future Me Journey
+              </h1>
+            </div>
 
             <p style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "#f8fafc", margin: 0 }}>
               You have already completed the hardest step — making the correct choice.
@@ -904,15 +930,15 @@ const activeMealTimes = getAdaptiveMealTimes();
         </div>
 
         <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))", gap: 16, marginBottom: 18 }}>
-          <div style={styles.card}><strong>Current weight</strong><h2>{currentWeight.toFixed(1)} kg</h2></div>
-          <div style={styles.card}><strong>Goal weight</strong><h2>{goalWeight.toFixed(1)} kg</h2></div>
-          <div style={styles.card}><strong>Progress</strong><h2>{progressPercent}%</h2><p>{weightLost.toFixed(1)} kg lost</p></div>
-          <div style={styles.card}><strong>Remaining</strong><h2>{weightRemaining.toFixed(1)} kg</h2></div>
+          <div style={styles.card}><strong style={styles.heading}>Current Weight</strong><h2 style={styles.heading}>{currentWeight.toFixed(1)} kg</h2></div>
+          <div style={styles.card}><strong style={styles.heading}>Goal Weight</strong><h2 style={styles.heading}>{goalWeight.toFixed(1)} kg</h2></div>
+          <div style={styles.card}><strong style={styles.heading}>Progress</strong><h2 style={styles.heading}>{progressPercent}%</h2><p style={styles.muted}>{weightLost.toFixed(1)} kg lost</p></div>
+          <div style={styles.card}><strong style={styles.heading}>Remaining</strong><h2 style={styles.heading}>{weightRemaining.toFixed(1)} kg</h2></div>
         </section>
 
         <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 18, marginBottom: 18 }}>
           <div style={styles.card}>
-            <h2>Work schedule today</h2>
+            <h2 style={styles.heading}>Work schedule today</h2>
 
             <select
               style={styles.input}
@@ -957,7 +983,7 @@ const activeMealTimes = getAdaptiveMealTimes();
           </div>
 
           <div style={styles.card}>
-            <h2>Medication / treatment</h2>
+            <h2 style={styles.heading}>Medication / treatment</h2>
             <select
               style={styles.input}
               value={medication}
@@ -990,7 +1016,7 @@ const activeMealTimes = getAdaptiveMealTimes();
           </div>
 
           <div style={styles.card}>
-            <h2>Today's mission</h2>
+            <h2 style={styles.heading}>Today's mission</h2>
             <p style={{ color: "#94a3b8" }}>{missionDone} / {missionItems.length} completed</p>
             {missionItems.map((item) => (
               <p key={item.label}>{item.done ? "✅" : "⬜"} {item.label}</p>
@@ -998,7 +1024,7 @@ const activeMealTimes = getAdaptiveMealTimes();
           </div>
 
           <div style={styles.card}>
-            <h2>Water tracker</h2>
+            <h2 style={styles.heading}>Water tracker</h2>
             <p style={{ color: "#94a3b8" }}>{waterDone} / 8 glasses</p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10 }}>
               {[1, 2, 3, 4, 5, 6, 7, 8].map((glass) => (
@@ -1021,9 +1047,9 @@ const activeMealTimes = getAdaptiveMealTimes();
           </div>
         </section>
 
-        <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+        <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 18 }}>
           <div style={styles.card}>
-            <h2>Health profile</h2>
+            <h2 style={styles.heading}>Health profile</h2>
             {healthOptions.map((item) => (
               <label key={item.key} style={{ display: "block", marginBottom: 10 }}>
                 <input type="checkbox" checked={!!healthProfile[item.key]} onChange={() => updateHealth(item.key)} /> {item.label}
@@ -1032,7 +1058,7 @@ const activeMealTimes = getAdaptiveMealTimes();
           </div>
 
           <div style={styles.card}>
-            <h2>Allergens / foods to avoid</h2>
+            <h2 style={styles.heading}>Allergens / foods to avoid</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(130px,1fr))", gap: 8 }}>
               {allergenOptions.map((item) => (
                 <label key={item}>
@@ -1043,16 +1069,16 @@ const activeMealTimes = getAdaptiveMealTimes();
           </div>
         </section>
 
-        <section style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: 18, marginTop: 18 }}>
+        <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 18, marginTop: 18 }}>
           <main style={{ display: "grid", gap: 18 }}>
             <div style={styles.card}>
-              <h2>Suggested meals</h2>
+              <h2 style={styles.heading}>Suggested meals</h2>
               {suggestedRecipes.map((recipe) => {
                 const calc = calculateRecipe(recipe);
                 return (
                   <div key={recipe.name} style={{ borderBottom: "1px solid rgba(148,163,184,0.18)", padding: "16px 0" }}>
                     <img src={recipe.image} alt={recipe.name} onError={(e) => { e.currentTarget.style.display = "none"; }} style={{ width: "100%", height: 180, objectFit: "cover", borderRadius: 16, marginBottom: 12 }} />
-                    <h3>{recipe.name}</h3>
+                    <h3 style={styles.heading}>{recipe.name}</h3>
                     <p>{recipe.mealType} · Portion {recipe.portionG}g</p>
                     <p><strong>{calc.calories} kcal</strong> · Protein {calc.protein}g · Carbs {calc.carbs}g · Fats {calc.fats}g</p>
                     <p style={{ color: "#94a3b8" }}>Allergens: {recipe.allergens.length ? recipe.allergens.join(", ") : "None listed"}</p>
@@ -1063,7 +1089,7 @@ const activeMealTimes = getAdaptiveMealTimes();
             </div>
 
             <div style={styles.card}>
-              <h2>Today's meals</h2>
+              <h2 style={styles.heading}>Today's meals</h2>
               {todaysMeals.length === 0 ? <p>No meals logged yet.</p> : todaysMeals.map((meal) => (
                 <div key={meal.id} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid rgba(148,163,184,0.15)", padding: "12px 0" }}>
                   <span>{meal.meal_name || meal.food_name || "Meal"}</span>
@@ -1075,7 +1101,7 @@ const activeMealTimes = getAdaptiveMealTimes();
 
           <aside style={{ display: "grid", gap: 18 }}>
             <div style={styles.card}>
-  <h2>Daily nutrition</h2>
+  <h2 style={styles.heading}>Daily nutrition</h2>
 
   {targets && (
     <>
@@ -1105,7 +1131,7 @@ const activeMealTimes = getAdaptiveMealTimes();
 
 </div>
             <div style={styles.card}>
-              <h2>Non-scale victories</h2>
+              <h2 style={styles.heading}>Non-scale victories</h2>
               <p>{victoriesDone} / {nonScaleVictoryOptions.length} checked today</p>
               {nonScaleVictoryOptions.map((item) => (
                 <label key={item} style={{ display: "block", marginBottom: 12 }}>
@@ -1115,7 +1141,7 @@ const activeMealTimes = getAdaptiveMealTimes();
             </div>
 
             <div style={styles.card}>
-              <h2>Meal times</h2>
+              <h2 style={styles.heading}>Meal times</h2>
               {activeMealTimes.map((meal, index) => (
                 <div key={index} style={{ display: "grid", gridTemplateColumns: "1fr 110px", gap: 8 }}>
                   <input style={styles.input} value={meal.name} onChange={(e) => updateMealTime(index, "name", e.target.value)} />
@@ -1125,13 +1151,13 @@ const activeMealTimes = getAdaptiveMealTimes();
             </div>
 
             <div style={styles.card}>
-              <h2>🌅 Future Me Journey</h2>
+              <h2 style={styles.heading}>🌅 Future Me Journey</h2>
               <p style={{ color: "#cbd5e1", lineHeight: 1.8 }}>{coachMessage}</p>
               <button style={styles.button} onClick={generateCoachMessage}>Inspire Me</button>
             </div>
 
             <div style={styles.card}>
-              <h2>Weight progress</h2>
+              <h2 style={styles.heading}>Weight progress</h2>
 
               {chartWeights.length < 2 ? (
                 <p style={{ color: "#94a3b8" }}>
@@ -1232,7 +1258,7 @@ const activeMealTimes = getAdaptiveMealTimes();
             </div>
 
             <div style={styles.card}>
-              <h2>Progress Photos</h2>
+              <h2 style={styles.heading}>Progress Photos</h2>
 
               <input
                 style={styles.input}
@@ -1301,7 +1327,7 @@ const activeMealTimes = getAdaptiveMealTimes();
             </div>
 
             <div style={styles.card}>
-              <h2>Add weight</h2>
+              <h2 style={styles.heading}>Add weight</h2>
               <form onSubmit={handleLogWeightSubmit}>
                 <input
                   style={styles.input}
@@ -1317,7 +1343,7 @@ const activeMealTimes = getAdaptiveMealTimes();
             </div>
 
             <div style={styles.card}>
-              <h2>Feedback</h2>
+              <h2 style={styles.heading}>Feedback</h2>
               <form onSubmit={submitFeedback}>
                 <input style={styles.input} type="number" min="1" max="5" placeholder="How easy is the app? 1-5" value={feedback.ease} onChange={(e) => setFeedback({ ...feedback, ease: e.target.value })} />
                 <select style={styles.input} value={feedback.wouldUse} onChange={(e) => setFeedback({ ...feedback, wouldUse: e.target.value })}>
