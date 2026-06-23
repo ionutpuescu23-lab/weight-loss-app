@@ -109,3 +109,18 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+h1, h2, h3, h4, strong, label {
+  color: #ffffff !important;
+}
+
+p, span, div {
+  color: #f8fafc;
+}
+
+select, input, textarea {
+  color: #ffffff !important;
+}
+
+option {
+  color: #111827;
+}
