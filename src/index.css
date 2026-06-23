@@ -124,3 +124,18 @@ select, input, textarea {
 option {
   color: #111827;
 }
+h1,
+h2,
+h3,
+h4,
+strong,
+label,
+p,
+span {
+  color: #ffffff !important;
+}
+
+select,
+input {
+  color: #ffffff !important;
+}
