@@ -139,3 +139,29 @@ select,
 input {
   color: #ffffff !important;
 }
+input,
+select,
+textarea {
+  background: rgba(15, 23, 42, 0.95) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(148, 163, 184, 0.45) !important;
+}
+
+option {
+  background: #0f172a !important;
+  color: #ffffff !important;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #38bdf8;
+}
+
+input[type="file"] {
+  color: #ffffff !important;
+}
+
+::placeholder {
+  color: #cbd5e1 !important;
+}
